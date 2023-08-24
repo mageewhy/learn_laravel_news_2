@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Laravel News - HTML5 Login</title>
+    <title>Laravel News - Forgot Password</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -20,46 +20,33 @@
 
 </head>
 
-<body class="app app-login p-0">
+<body class="app app-reset-password p-0">
     <div class="row g-0 app-auth-wrapper">
 	    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
 		    <div class="d-flex flex-column align-content-end">
 			    <div class="app-auth-body mx-auto">
 				    <div class="app-auth-branding mb-4"><a class="app-logo" href="{{route('home-page')}}"><h1 class="text-danger text-bold">Laravel News</h1></a></div>
-					<h2 class="auth-heading text-center mb-5">Log in</h2>
-			        <div class="auth-form-container text-start">
-						<form class="auth-form login-form" method="POST" action=" {{route('login')}}">
-							@csrf
+					<h2 class="auth-heading text-center mb-4">Password Reset</h2>
+
+					<div class="auth-intro mb-4 text-center">Enter your email address below. We'll email you a link to a page where you can easily create a new password.</div>
+
+					<div class="auth-form-container text-left">
+
+						<form class="auth-form resetpass-form" method="POST" action="{{route('password.update')}}">
+						@csrf
+                        <input type="hidden" name="token" value="{{ $request->route('token') }}">
                             <div class="email mb-3">
-								<label class="sr-only" for="email">Email</label>
-								<input id="email" name="email" type="email" class="form-control signin-email" placeholder="Email address" name="email" :value="old('email')" required="required">
-							</div><!--//form-group-->
-							<div class="password mb-3">
-								<label class="sr-only" for="password">Password</label>
-								<input id="password" name="password" type="password" class="form-control signin-password" placeholder="Password" required="required">
-								<div class="extra mt-3 row justify-content-between">
-									<div {{-- class="col-6" --}}>
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="" id="remember_me" name="remember">
-											<label class="form-check-label" for="remember_me">
-											Remember me
-											</label>
-										</div>
-									</div><!--//col-6-->
-									{{-- <div class="col-6">
-										<div class="forgot-password text-end">
-											<a href="{{route('password.request')}}">Forgot password?</a>
-										</div>
-									</div><!--//col-6--> --}}
-								</div><!--//extra-->
+								<label class="sr-only" for="email">Your Email</label>
+								<input id="email" name="email" type="email" class="form-control login-email" placeholder="Your Email" required="required">
 							</div><!--//form-group-->
 							<div class="text-center">
-								<button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Log In</button>
+								<button type="submit" class="btn app-btn-primary btn-block theme-btn mx-auto">Reset Password</button>
 							</div>
 						</form>
 
-						<div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link" href="{{route('register')}}" >here</a>.</div>
+						<div class="auth-option text-center pt-5"><a class="app-link" href="{{route('login')}}" >Log in</a> <span class="px-2">|</span> <a class="app-link" href="{{route('register')}}" >Sign up</a></div>
 					</div><!--//auth-form-container-->
+
 
 			    </div><!--//auth-body-->
 

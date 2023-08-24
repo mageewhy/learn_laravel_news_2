@@ -13,7 +13,7 @@ class SubCategoryController extends Controller
     public function subcategoryShow(){
         $sub_category = Subcategory::latest()->paginate(7);
 
-        return view('admin.sub_category.subcategory', compact('sub_category'));
+        return view('admin.subcategory.subcategory', compact('sub_category'));
     }
 
     public function addSubCategory(){

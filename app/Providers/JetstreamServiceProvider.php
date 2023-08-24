@@ -33,6 +33,12 @@ class JetstreamServiceProvider extends ServiceProvider
         Fortify::registerView(function(){
             return view('admin.auth.register');
         });
+        Fortify::resetPasswordView(function(){
+            return view('admin.auth.reset-password');
+        });
+        Fortify::requestPasswordResetLinkView(function(){
+            return view('admin.auth.reset-password');
+        });
     }
 
     /**

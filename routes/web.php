@@ -93,7 +93,7 @@ Route::middleware([
     // })->name('login-page');
 
     Route::get('/dashboard', function () {
-        return view('admin.index');
+        return view('admin.dashboard-layout');
     })->name('dashboard');
 
     //Main Route For Category, SubCategory, and Posts
