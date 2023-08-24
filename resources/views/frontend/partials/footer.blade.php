@@ -8,9 +8,7 @@
                         <div class="single-footer-caption">
                             <!-- logo -->
                             <div class="footer-logo">
-                                <a href="index.html"><img
-                                        src="{{ asset('frontend/assets/img/logo/logo2_footer.png') }}"
-                                        alt=""></a>
+                                <a href="index.html"><h1 class="text-danger text-">Laravel News</h1></a>
                             </div>
                             <div class="footer-tittle">
                                 <div class="footer-pera">

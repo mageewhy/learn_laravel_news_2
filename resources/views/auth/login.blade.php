@@ -1,86 +1,48 @@
-<!DOCTYPE html>
-<html lang="en"> 
-<head>
-    <title>News - HTML5 Login</title>
-    
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-    <link rel="shortcut icon" href="favicon.ico"> 
-    
-    <!-- FontAwesome JS-->
-    <script defer src="{{asset('auth/assets/plugins/fontawesome/js/all.min.js')}}"></script>
-    
-    <!-- App CSS -->  
-    <link id="theme-style" rel="stylesheet" href="{{asset('auth/assets/css/portal.css')}}">
+<x-guest-layout>
+    <x-authentication-card>
+        <x-slot name="logo">
+            <x-authentication-card-logo />
+        </x-slot>
 
-</head> 
+        <x-validation-errors class="mb-4" />
 
-<body class="app app-login p-0">    	
-    <div class="row g-0 app-auth-wrapper">
-	    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
-		    <div class="d-flex flex-column align-content-end">
-			    <div class="app-auth-body mx-auto">	
-				    <div class="app-auth-branding mb-4"><a class="app-logo" href="index.html"><img class="logo-icon me-2" src="assets/images/app-logo.svg" alt="logo"></a></div>
-					<h2 class="auth-heading text-center mb-5">Log in to Portal</h2>
-			        <div class="auth-form-container text-start">
-						<form class="auth-form login-form" method="POST" action=" {{route('login')}}">         
-							@csrf
-                            <div class="email mb-3">
-								<label class="sr-only" for="email">Email</label>
-								<input id="email" name="signin-email" type="email" class="form-control signin-email" placeholder="Email address" name="email" :value="old('email')" required="required">
-							</div><!--//form-group-->
-							<div class="password mb-3">
-								<label class="sr-only" for="password">Password</label>
-								<input id="password" name="password" type="password" class="form-control signin-password" placeholder="Password" required="required">
-								<div class="extra mt-3 row justify-content-between">
-									<div class="col-6">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value="" id="remember_me" name="remember">
-											<label class="form-check-label" for="remember_me">
-											Remember me
-											</label>
-										</div>
-									</div><!--//col-6-->
-									<div class="col-6">
-										<div class="forgot-password text-end">
-											<a href="reset-password.html">Forgot password?</a>
-										</div>
-									</div><!--//col-6-->
-								</div><!--//extra-->
-							</div><!--//form-group-->
-							<div class="text-center">
-								<button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Log In</button>
-							</div>
-						</form>
-						
-						<div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link" href="{{route('register')}}" >here</a>.</div>
-					</div><!--//auth-form-container-->	
+        @if (session('status'))
+            <div class="mb-4 font-medium text-sm text-green-600">
+                {{ session('status') }}
+            </div>
+        @endif
 
-			    </div><!--//auth-body-->
-		    
-			    <footer class="app-auth-footer">
-				    <div class="container text-center py-3">
-				         <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-			        <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-				       
-				    </div>
-			    </footer><!--//app-auth-footer-->	
-		    </div><!--//flex-column-->   
-	    </div><!--//auth-main-col-->
-	    <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
-		    <div class="auth-background-holder">
-		    </div>
-		    <div class="auth-background-mask"></div>
-	    </div><!--//auth-background-col-->
-    
-    </div><!--//row-->
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
 
+            <div>
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            </div>
 
-</body>
-</html> 
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Password') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+            </div>
 
+            <div class="block mt-4">
+                <label for="remember_me" class="flex items-center">
+                    <x-checkbox id="remember_me" name="remember" />
+                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                @if (Route::has('password.request'))
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                        {{ __('Forgot your password?') }}
+                    </a>
+                @endif
+
+                <x-button class="ml-4">
+                    {{ __('Log in') }}
+                </x-button>
+            </div>
+        </form>
+    </x-authentication-card>
+</x-guest-layout>
