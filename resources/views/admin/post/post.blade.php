@@ -5,7 +5,7 @@
 
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Subcategory</h1>
+                    <h1 class="app-page-title mb-0">Post</h1>
                 </div>
                 <div class="col-auto">
                     <div class="page-utilities">
@@ -54,19 +54,26 @@
                                 <thead>
                                     <tr>
                                         <th class="cell">Category</th>
-                                        <th class="cell">Subcategory Khmer</th>
-                                        <th class="cell">Subcategory English</th>
+                                        <th class="cell">Subcategory</th>
+                                        <th class="cell">Title KH</th>
+                                        <th class="cell">Title EN</th>
+                                        <th class="cell">Image</th>
+                                        <th class="cell">Status</th>
                                         <th class="cell">Created At</th>
                                         <th class="cell">Updated At</th>
                                         <th class="cell">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($subcategory as $item)
+                                    @forelse ($post as $item)
                                         <tr>
                                             <td class="cell">{{ $item->category->category_kh }} || {{ $item->category->category_en }}</td>
-                                            <td class="cell">{{ $item->sub_category_kh }}</td>
-                                            <td class="cell">{{ $item->sub_category_en }}</td>
+                                            <td class="cell">{{ $item->subcategory->sub_category_kh }} || {{ $item->subcategory->sub_category_en }}</td>
+                                            <td class="cell">{{ $item->title_kh }}</td>
+                                            <td class="cell">{{ $item->title_en }}</td>
+                                            <td class="cell"><img width="100px" height="100px" src="{{ asset('images/' . $item->image) }}"
+                                                alt="image"></td>
+                                            <td class="cell">{{ $item->status }}</td>
                                             <td class="cell">{{ $item->created_at }}</td>
                                             <td class="cell">{{ $item->updated_at }}</td>
                                             <td class="cell">
@@ -91,7 +98,7 @@
                     </div><!--//app-card-body-->
                 </div><!--//app-card-->
                 <div class="app-pagination">
-                    {{ $subcategory->links() }}
+                    {{ $post->links() }}
                 </div><!--//app-pagination-->
             </div><!--//container-fluid-->
         </div><!--//app-content-->

@@ -34,7 +34,7 @@
                         <ul class="submenu-list list-unstyled">
                             <li class="submenu-item"><a class="submenu-link"
                                     href="{{route('admin.category')}}">Show Category</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="account.html">Create Category</a>
+                            <li class="submenu-item"><a class="submenu-link" href="{{route('admin.add-category')}}">Create Category</a>
                             </li>
                         </ul>
                     </div>
@@ -61,8 +61,8 @@
                     </a><!--//nav-link-->
                     <div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link" href="login.html">Show Subcategory</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="signup.html">Create Subcategory</a>
+                            <li class="submenu-item"><a class="submenu-link" href="{{route('admin.sub-category')}}">Show Subcategory</a></li>
+                            <li class="submenu-item"><a class="submenu-link" href="{{route('admin.add-subcategory')}}">Create Subcategory</a>
                             </li>
                         </ul>
                     </div>
@@ -91,8 +91,8 @@
                     <div id="submenu-3" class="collapse submenu submenu-3" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
                             <li class="submenu-item"><a class="submenu-link"
-                                    href="notifications.html">Show Post</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="account.html">Create Post</a>
+                                    href="{{route('admin.posts')}}">Show Post</a></li>
+                            <li class="submenu-item"><a class="submenu-link" href="{{route('admin.add-post')}}">Create Post</a>
                             </li>
                         </ul>
                     </div>

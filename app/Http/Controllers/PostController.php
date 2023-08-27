@@ -15,18 +15,18 @@ class PostController extends Controller
     public function viewPost(){
         $post = Post::latest()->paginate(5);
         $categories = Category::all();
-        $sub_categories = Subcategory::all();
+        $subcategories = Subcategory::all();
 
-        return view('admin.post.post', compact('post', 'categories','sub_categories'));
+        return view('admin.post.post', compact('post', 'categories','subcategories'));
     }
 
     public function addPost(){
         // $categories = Category::all();
         $post = Post::all();
         $categories = Category::all();
-        $sub_categories = Subcategory::all();
+        $subcategories = Subcategory::all();
 
-        return view('admin.post.add-post', compact('post', 'categories', 'sub_categories'));
+        return view('admin.post.add-post', compact('post', 'categories', 'subcategories'));
     }
 
     public function storePost(Request $request){
@@ -84,9 +84,9 @@ class PostController extends Controller
     public function editPost($post_id){
         $post = Post::find($post_id);
         $categories = Category::all();
-        $sub_categories = Subcategory::all();
+        $subcategories = Subcategory::all();
 
-        return view('admin.post.edit-post', compact('post', 'categories', 'sub_categories'));
+        return view('admin.post.edit-post', compact('post', 'categories', 'subcategories'));
 
     }
 
@@ -165,11 +165,11 @@ class PostController extends Controller
 
     public function getSubOpt(Request $request){
 
-        $sub_categories = Subcategory::where('category_id', $request->cat_id)->get();
+        $subcategories = Subcategory::where('category_id', $request->cat_id)->get();
 
         $sub_cat_data = '<option value="">Select Sub Category</option>';
 
-        foreach ($sub_categories as $key => $value) {
+        foreach ($subcategories as $key => $value) {
             $sub_cat_data.='<option value="'.$value->id.'">'.$value->sub_category_kh.' | '.$value->sub_category_en.'</option>';
         }
         return $sub_cat_data;

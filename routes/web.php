@@ -114,7 +114,7 @@ Route::middleware([
         });
 
         Route::controller(SubCategoryController::class)->group(function(){
-            Route::get('/sub-category', 'subc   ategoryShow')->name('admin.sub-category');
+            Route::get('/sub-category', 'subcategoryShow')->name('admin.sub-category');
 
             Route::get('/sub-category/add-sub-category', 'addSubcategory')->name('admin.add-subcategory');
             Route::post('/add-new-sub-category', 'storeSubcategory')->name('admin.store-subcategory');
