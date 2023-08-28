@@ -111,19 +111,22 @@ Route::middleware([
 
             Route::get('/delete-category/{category_id}', 'deleteCategory')->name('admin.delete-category');
 
+            Route::get('/category/search', 'searchQuery')->name('category-searchQuery');
+
         });
 
         Route::controller(SubCategoryController::class)->group(function(){
-            Route::get('/sub-category', 'subcategoryShow')->name('admin.sub-category');
+            Route::get('/subcategory', 'subcategoryShow')->name('admin.subcategory');
 
-            Route::get('/sub-category/add-sub-category', 'addSubcategory')->name('admin.add-subcategory');
-            Route::post('/add-new-sub-category', 'storeSubcategory')->name('admin.store-subcategory');
+            Route::get('/subcategory/add-subcategory', 'addSubcategory')->name('admin.add-subcategory');
+            Route::post('/add-new-subcategory', 'storeSubcategory')->name('admin.store-subcategory');
 
-            Route::get('/edit-sub-category/{sub_category_id}', 'editSubcategory')->name('admin.edit-subcategory');
-            Route::post('/update-sub-category/{sub_category_id}', 'updateSubcategory')->name('admin.update-subcategory');
+            Route::get('/edit-subcategory/{sub_category_id}', 'editSubcategory')->name('admin.edit-subcategory');
+            Route::post('/update-subcategory/{sub_category_id}', 'updateSubcategory')->name('admin.update-subcategory');
 
-            Route::get('/delete-sub-category/{sub_category_id}', 'deleteSubcategory')->name('admin.delete-subcategory');
+            Route::get('/delete-subcategory/{sub_category_id}', 'deleteSubcategory')->name('admin.delete-subcategory');
 
+            Route::get('/subcategory/search', 'searchQuery')->name('subcategory-searchQuery');
 
         });
 
@@ -137,6 +140,8 @@ Route::middleware([
             Route::post('/update-posts/{posts_id}', 'updatePost')->name('admin.update-posts');
 
             Route::get('/delete-post/{posts_id}', 'deletePost')->name('admin.delete-post');
+
+            Route::get('/post/search', 'searchQuery')->name('post-searchQuery');
 
             //ajax
             Route::get('/get-subcategory-option', 'getSubOpt')->name('admin.get-subcategory-option');

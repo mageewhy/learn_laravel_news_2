@@ -176,4 +176,55 @@ class PostController extends Controller
 
         // return $request;
     }
+
+    public function searchQuery(Request $request){
+        $categories = Category::all();
+        $subcategories = Subcategory::all();
+        $search_text = $request->input('search-subcategory');
+        $category_query = $request->input('select-category-query');
+        $subcategory_query = $request->input('select-subcategory-query');
+
+        
+        if($category_query == null && $subcategory_query == null && $search_text == null){
+            $post = Post::paginate(5);
+            $category_id = $category_query;
+            $subcategory_id = $subcategory_query;
+        }
+        else if($category_query != null && $subcategory_query != null && $search_text != null){
+            $post = Post::where('title_en', 'LIKE', '%'.$search_text.'%')
+            ->where('category_id', $category_query)
+            ->where('sub_category_id', $subcategory_query)
+            ->paginate(5);
+            $category_id = Category::find($category_query);
+            $subcategory_id = Subcategory::find($subcategory_query);
+        }
+        else if($category_query != null && $subcategory_query == null && $search_text == null){
+            $post = Post::where('category_id', $category_query)
+            ->paginate(5);
+            $category_id = Category::find($category_query);
+            $subcategory_id = $subcategory_query;
+        }
+        else if($category_query == null && $subcategory_query !== null && $search_text == null){
+            $post = Post::where('sub_category_id', $subcategory_query)
+            ->paginate(5);
+            $category_id = $category_query;
+            $subcategory_id = Subcategory::find($subcategory_query);
+        }
+        else if($category_query != null && $subcategory_query != null && $search_text == null){
+            $post = Post::where('category_id', $category_query)
+            ->where('sub_category_id', $subcategory_query)
+            ->paginate(5);
+            $category_id = Category::find($category_query);
+            $subcategory_id = Subcategory::find($subcategory_query);
+
+        }
+        else if($category_query == null && $subcategory_query == null && $search_text != null){
+            $post = Post::where('title_en', 'LIKE', '%'.$search_text.'%')
+            ->paginate(5);
+            $category_id = $category_query;
+            $subcategory_id = $subcategory_query;
+        }
+
+        return view('admin.post.post-query', compact('post', 'categories', 'subcategories' , 'category_id', 'subcategory_id'));
+    }
 }

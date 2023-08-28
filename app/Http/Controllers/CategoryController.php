@@ -77,4 +77,11 @@ class CategoryController extends Controller
 
     }
 
+    public function searchQuery(Request $request){
+        $search_text = $request->input('search-category');
+        $category = Category::where('category_en', 'LIKE', '%'.$search_text.'%')->paginate(5);
+
+        return view('admin.category.category-query', compact('category'));
+    }
+
 }

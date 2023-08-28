@@ -11,10 +11,10 @@
                     <div class="page-utilities">
                         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                             <div class="col-auto">
-                                <form class="table-search-form row gx-1 align-items-center">
+                                <form class="table-search-form row gx-1 align-items-center" action="{{route('category-searchQuery')}}" method="GET">
                                     <div class="col-auto">
-                                        <input type="text" id="search-orders" name="searchorders"
-                                            class="form-control search-orders" placeholder="Search">
+                                        <input type="text" id="search" name="search-category"
+                                            class="form-control" placeholder="Search">
                                     </div>
                                     <div class="col-auto">
                                         <button type="submit" class="btn app-btn-secondary">Search</button>

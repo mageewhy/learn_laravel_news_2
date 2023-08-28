@@ -5,7 +5,19 @@
 
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Post</h1>
+
+                    <h1 class="app-page-title mb-0">
+
+                        <a href="{{ route('admin.posts') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-arrow-left-square" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                            </svg>
+                        </a>
+
+                        Posts
+                    </h1>
                 </div>
                 <div class="col-auto">
                     <div class="page-utilities">
@@ -21,8 +33,14 @@
                                         <select class="form-select w-auto" name="select-category-query" id="category">
                                             <option value="">All Category</option>
                                             @foreach ($categories as $item)
-                                                <option value="{{ $item->id }}"> {{ $item->category_kh }} ||
-                                                    {{ $item->category_en }} </option>
+                                                <option value="{{ $item->id }}"
+                                                    @if ($category_id != null) 
+                                                        {{ $item->id == $category_id->id ? 'selected' : '' }}
+                                                    @else
+                                                        {{ $item->id == $category_id ? 'selected' : '' }}
+                                                    @endif>
+                                                    {{ $item->category_kh }} || {{ $item->category_en }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -30,8 +48,14 @@
                                         <select class="form-select w-auto" name="select-subcategory-query" id="subcategory">
                                             <option value="">All Subcategory</option>
                                             @foreach ($subcategories as $item)
-                                                <option value="{{ $item->id }}"> {{ $item->sub_category_kh }} ||
-                                                    {{ $item->sub_category_en }} </option>
+                                                <option value="{{ $item->id }}"
+                                                    @if ($subcategory_id != null) 
+                                                        {{ $item->id == $subcategory_id->id ? 'selected' : '' }}
+                                                    @else
+                                                        {{ $item->id == $subcategory_id ? 'selected' : '' }}
+                                                    @endif>
+                                                    {{ $item->sub_category_kh }} || {{ $item->sub_category_en }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -40,7 +64,15 @@
                                     </div>
                                 </form>
                             </div><!--//col-->
+                            {{-- <div class="col-auto">
+                                <select class="form-select w-auto">
+                                    <option selected value="option-1">All</option>
+                                    <option value="option-2">This week</option>
+                                    <option value="option-3">This month</option>
+                                    <option value="option-4">Last 3 months</option>
 
+                                </select>
+                            </div> --}}
                             {{-- <div class="col-auto">
                                 <a class="btn app-btn-secondary" href="#">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"

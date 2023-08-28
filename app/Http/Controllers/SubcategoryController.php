@@ -11,9 +11,10 @@ use Illuminate\Validation\Rule;
 class SubCategoryController extends Controller
 {
     public function subcategoryShow(){
+        $category = Category::all();
         $subcategory = Subcategory::latest()->paginate(7);
 
-        return view('admin.subcategory.subcategory', compact('subcategory'));
+        return view('admin.subcategory.subcategory', compact('subcategory', 'category'));
     }
 
     public function addSubCategory(){
@@ -84,6 +85,36 @@ class SubCategoryController extends Controller
             return redirect()->back()->with('error', 'Failed to delete the content!');
         }
 
+    }
+
+    public function searchQuery(Request $request){
+        $category = Category::all();
+        $search_text = $request->input('search-subcategory');
+        $category_query = $request->input('select-category-query');
+
+        
+        if($category_query == null && $search_text == null){
+            $subcategory = Subcategory::paginate(7);
+            $category_id = $category_query;
+        }
+        else if($search_text != null && $category_query == null){
+            $subcategory = Subcategory::where('sub_category_en', 'LIKE', '%'.$search_text.'%')
+            ->paginate(7);
+            $category_id = $category_query;
+        }
+        else if($category_query != null && $search_text == null){
+            $subcategory = Subcategory::where('category_id', $category_query)
+            ->paginate(7);
+            $category_id = Category::find($category_query);
+        }
+        else {
+            $subcategory = Subcategory::where('sub_category_en', 'LIKE', '%'.$search_text.'%')
+            ->where('category_id', $category_query)
+            ->paginate(7);
+            $category_id = Category::find($category_query);
+        }
+
+        return view('admin.subcategory.subcategory-query', compact('subcategory', 'category', 'category_id'));
     }
 
 }
