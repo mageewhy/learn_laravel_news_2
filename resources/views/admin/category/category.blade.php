@@ -11,10 +11,11 @@
                     <div class="page-utilities">
                         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                             <div class="col-auto">
-                                <form class="table-search-form row gx-1 align-items-center" action="{{route('category-searchQuery')}}" method="GET">
+                                <form class="table-search-form row gx-1 align-items-center"
+                                    action="{{ route('category-searchQuery') }}" method="GET">
                                     <div class="col-auto">
-                                        <input type="text" id="search" name="search-category"
-                                            class="form-control" placeholder="Search">
+                                        <input type="text" id="search" name="search-category" class="form-control"
+                                            placeholder="Search">
                                     </div>
                                     <div class="col-auto">
                                         <button type="submit" class="btn app-btn-secondary">Search</button>
@@ -90,9 +91,21 @@
 
                     </div><!--//app-card-body-->
                 </div><!--//app-card-->
-                <div class="app-pagination">
-                    {{ $category->links() }}
-                </div><!--//app-pagination-->
-            </div><!--//container-fluid-->
-        </div><!--//app-content-->
-    @endsection
+            </div><!--//table-content-->
+            <div class="app-pagination">
+                {{ $category->links() }}
+            </div><!--//app-pagination-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+@endsection
+
+<script>
+    $(document).ready(function() {
+            toastr.options.timeOut = 10000;
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @elseif (Session::has('success'))
+                toastr.success('{{ Session::get('success') }}');
+            @endif
+        });
+</script>

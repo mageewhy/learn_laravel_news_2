@@ -17,7 +17,7 @@ class SubCategoryController extends Controller
         return view('admin.subcategory.subcategory', compact('subcategory', 'category'));
     }
 
-    public function addSubCategory(){
+    public function addSubcategory(){
         $categories = Category::all();
 
         return view('admin.subcategory.add-subcategory', compact('categories'));
@@ -29,8 +29,8 @@ class SubCategoryController extends Controller
             'sub_category_en' => ['required', Rule::unique('subcategories')],
         ]);
 
-        SubCategory::create([
-            'category_id' =>$request->category_id,
+        Subcategory::create([
+            'category_id' => $request->input('category_id'),
             'sub_category_kh' => $request->sub_category_kh,
             'sub_category_en' => $request->sub_category_en,
             'created_at' => Carbon::now(),
@@ -43,9 +43,9 @@ class SubCategoryController extends Controller
     public function editSubcategory($sub_category_id){
         // abort_if(!isset($category[$id]),404);
         $categories = Category::all();
-        $sub_category = Subcategory::find($sub_category_id);
+        $subcategory = Subcategory::find($sub_category_id);
 
-        return view('admin.subcategory.edit-subcategory', compact('sub_category', 'categories'));
+        return view('admin.subcategory.edit-subcategory', compact('subcategory', 'categories'));
 
     }
 

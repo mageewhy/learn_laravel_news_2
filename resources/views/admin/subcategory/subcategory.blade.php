@@ -11,16 +11,18 @@
                     <div class="page-utilities">
                         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                             <div class="col-auto">
-                                <form class="table-search-form row gx-1 align-items-center" action="{{route('subcategory-searchQuery')}}" method="GET">
+                                <form class="table-search-form row gx-1 align-items-center"
+                                    action="{{ route('subcategory-searchQuery') }}" method="GET">
                                     <div class="col-auto">
-                                        <input type="text" id="search" name="search-subcategory"
-                                            class="form-control" placeholder="Search">
+                                        <input type="text" id="search" name="search-subcategory" class="form-control"
+                                            placeholder="Search">
                                     </div>
                                     <div class="col-auto">
                                         <select class="form-select w-auto" name="select-category-query">
                                             <option selected value="">All Category</option>
                                             @foreach ($category as $item)
-                                                <option value="{{$item->id}}">{{$item->category_kh}} || {{$item->category_en}}</option>
+                                                <option value="{{ $item->id }}">{{ $item->category_kh }} ||
+                                                    {{ $item->category_en }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -72,16 +74,17 @@
                                 <tbody>
                                     @forelse ($subcategory as $item)
                                         <tr>
-                                            <td class="cell">{{ $item->category->category_kh }} || {{ $item->category->category_en }}</td>
+                                            <td class="cell">{{ $item->category->category_kh }} ||
+                                                {{ $item->category->category_en }}</td>
                                             <td class="cell">{{ $item->sub_category_kh }}</td>
                                             <td class="cell">{{ $item->sub_category_en }}</td>
                                             <td class="cell">{{ $item->created_at }}</td>
                                             <td class="cell">{{ $item->updated_at }}</td>
                                             <td class="cell">
                                                 <a class="btn btn-primary"
-                                                    href="{{ route('admin.edit-category', $item->id) }}">Edit</a>
+                                                    href="{{ route('admin.edit-subcategory', $item->id) }}">Edit</a>
                                                 <a class="btn btn-danger"
-                                                    href="{{ route('admin.delete-category', $item->id) }}"
+                                                    href="{{ route('admin.delete-subcategory', $item->id) }}"
                                                     id="delete">Delete</a>
                                             </td>
                                         </tr>
@@ -98,9 +101,21 @@
 
                     </div><!--//app-card-body-->
                 </div><!--//app-card-->
-                <div class="app-pagination">
-                    {{ $subcategory->links() }}
-                </div><!--//app-pagination-->
-            </div><!--//container-fluid-->
-        </div><!--//app-content-->
-    @endsection
+            </div><!--//table-content-->
+            <div class="app-pagination">
+                {{ $subcategory->links() }}
+            </div><!--//app-pagination-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+@endsection
+
+<script>
+    $(document).ready(function() {
+            toastr.options.timeOut = 10000;
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @elseif (Session::has('success'))
+                toastr.success('{{ Session::get('success') }}');
+            @endif
+        });
+</script>

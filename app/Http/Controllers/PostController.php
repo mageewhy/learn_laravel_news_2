@@ -12,12 +12,18 @@ use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
-    public function viewPost(){
+    public function viewPost(Request $request){
         $post = Post::latest()->paginate(5);
         $categories = Category::all();
         $subcategories = Subcategory::all();
 
-        return view('admin.post.post', compact('post', 'categories','subcategories'));
+        $category_query = $request->input('select-category-query');
+        $subcategory_query = $request->input('select-subcategory-query');
+
+        $category_id = $category_query;
+        $subcategory_id = $subcategory_query;
+
+        return view('admin.post.post', compact('post', 'categories','subcategories', 'category_id', 'subcategory_id'));
     }
 
     public function addPost(){
@@ -180,7 +186,7 @@ class PostController extends Controller
     public function searchQuery(Request $request){
         $categories = Category::all();
         $subcategories = Subcategory::all();
-        $search_text = $request->input('search-subcategory');
+        $search_text = $request->input('search-post');
         $category_query = $request->input('select-category-query');
         $subcategory_query = $request->input('select-subcategory-query');
 
@@ -218,8 +224,28 @@ class PostController extends Controller
             $subcategory_id = Subcategory::find($subcategory_query);
 
         }
+        else if($category_query != null && $subcategory_query == null && $search_text != null){
+            $post = Post::where('category_id', $category_query)
+            ->where(function ($query) use ($search_text) {
+                $query->where('title_en', 'LIKE', '%'.$search_text.'%');
+            })
+            ->paginate(5);
+            $category_id = Category::find($category_query);
+            $subcategory_id = $subcategory_query;
+        }
+        else if($category_query == null && $subcategory_query != null && $search_text != null){
+            $post = Post::where('sub_category_id', $subcategory_query)
+            ->where(function ($query) use ($search_text) {
+                $query->where('title_en', 'LIKE', '%'.$search_text.'%');
+            })
+            ->paginate(5);
+            $category_id = $category_query;
+            $subcategory_id = Subcategory::find($subcategory_query);
+        }
         else if($category_query == null && $subcategory_query == null && $search_text != null){
-            $post = Post::where('title_en', 'LIKE', '%'.$search_text.'%')
+            $post = Post::where(function ($query) use ($search_text) {
+                $query->where('title_en', 'LIKE', '%'.$search_text.'%');
+            })
             ->paginate(5);
             $category_id = $category_query;
             $subcategory_id = $subcategory_query;

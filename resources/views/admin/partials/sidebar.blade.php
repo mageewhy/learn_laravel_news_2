@@ -90,10 +90,8 @@
                     </a><!--//nav-link-->
                     <div id="submenu-3" class="collapse submenu submenu-3" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link"
-                                    href="{{route('admin.posts')}}">Show Post</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="{{route('admin.add-post')}}">Create Post</a>
-                            </li>
+                            <li class="submenu-item"><a class="submenu-link" href="{{route('admin.posts')}}">Show Post</a></li>
+                            <li class="submenu-item"><a class="submenu-link" href="{{route('admin.add-post')}}">Create Post</a></li>
                         </ul>
                     </div>
                 </li><!--//nav-item-->
@@ -104,7 +102,7 @@
                 <ul class="app-menu footer-menu list-unstyled">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="settings.html">
+                        <a class="nav-link" href="">
                             <span class="nav-icon">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">

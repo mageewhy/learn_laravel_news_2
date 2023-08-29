@@ -64,7 +64,7 @@
                                         $category = App\Models\Category::all();
                                     @endphp
                                     <ul id="navigation">
-                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="{{route('home-page')}}">Home</a></li>
                                         @foreach ($category as $categ_data)
                                             <li><a href=""> {{ $categ_data->category_en }} </a>
                                                 @php

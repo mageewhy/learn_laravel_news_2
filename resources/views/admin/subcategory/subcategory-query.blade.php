@@ -8,7 +8,7 @@
 
                     <h1 class="app-page-title mb-0">
 
-                        <a href="{{route('admin.subcategory')}}">
+                        <a href="{{ route('admin.subcategory') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                 class="bi bi-arrow-left-square" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -33,14 +33,12 @@
                                         <select class="form-select w-auto" name="select-category-query">
                                             <option value="">All Category</option>
                                             @foreach ($category as $item)
-                                                <option value="{{$item->id}}" 
-                                                @if ($category_id != null)
-                                                    {{ $item->id == $category_id->id ? "selected" : "" }}
+                                                <option value="{{ $item->id }}"
+                                                    @if ($category_id != null) {{ $item->id == $category_id->id ? 'selected' : '' }}
                                                 @else
-                                                    {{ $item->id == $category_id ? "selected" : "" }}
-                                                @endif>
-                                                {{$item->category_kh}} || {{$item->category_en}}
-                                            </option>
+                                                    {{ $item->id == $category_id ? 'selected' : '' }} @endif>
+                                                    {{ $item->category_kh }} || {{ $item->category_en }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -49,7 +47,7 @@
                                     </div>
                                 </form>
                             </div><!--//col-->
-                            
+
                             {{-- <div class="col-auto">
                                 <select class="form-select w-auto">
                                     <option selected value="option-1">All</option>
@@ -100,9 +98,9 @@
                                             <td class="cell">{{ $item->updated_at }}</td>
                                             <td class="cell">
                                                 <a class="btn btn-primary"
-                                                    href="{{ route('admin.edit-category', $item->id) }}">Edit</a>
+                                                    href="{{ route('admin.edit-subcategory', $item->id) }}">Edit</a>
                                                 <a class="btn btn-danger"
-                                                    href="{{ route('admin.delete-category', $item->id) }}"
+                                                    href="{{ route('admin.delete-subcategory', $item->id) }}"
                                                     id="delete">Delete</a>
                                             </td>
                                         </tr>
@@ -119,9 +117,21 @@
 
                     </div><!--//app-card-body-->
                 </div><!--//app-card-->
-                <div class="app-pagination">
-                    {{ $subcategory->links() }}
-                </div><!--//app-pagination-->
-            </div><!--//container-fluid-->
-        </div><!--//app-content-->
-    @endsection
+            </div><!--//table-content-->
+            <div class="app-pagination">
+                {{ $subcategory->links() }}
+            </div><!--//app-pagination-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+@endsection
+
+<script>
+    $(document).ready(function() {
+            toastr.options.timeOut = 10000;
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @elseif (Session::has('success'))
+                toastr.success('{{ Session::get('success') }}');
+            @endif
+        });
+</script>

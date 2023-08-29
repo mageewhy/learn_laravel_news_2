@@ -19,14 +19,20 @@
                                     <label for="category_kh" class="form-label">Category Khmer</label>
                                     <input type="text" class="form-control" id="category_kh" name="category_kh"
                                         value="{{ old('category_kh') }}" required>
+                                    @error('category_kh')
+                                        <div class="text-danger m-0">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <label for="category_en" class="form-label">Category English</label>
                                     <input type="text" class="form-control" id="category_kh" name="category_en"
                                         value="{{ old('category_en') }}" required>
+                                    @error('category_en')
+                                        <div class="text-danger m-0">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <button type="submit" class="btn app-btn-primary">Add New</button>
-                                <a href="{{route('admin.category')}}" class="btn btn-danger text-white">Cancel</a>
+                                <a href="{{ route('admin.category') }}" class="btn btn-danger text-white">Cancel</a>
                             </form>
                         </div>
                     </div><!--//app-card-body-->
