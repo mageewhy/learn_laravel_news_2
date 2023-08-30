@@ -9,7 +9,8 @@
                         <div class="row d-flex justify-content-between align-items-center">
                             <div class="header-info-left">
                                 <ul>
-                                    <li><img src="{{asset('frontend/assets/img/icon/header_icon1.png')}}" alt="">{{$date}}</li>
+                                    <li><img src="{{ asset('frontend/assets/img/icon/header_icon1.png') }}"
+                                            alt="">{{ $date }}</li>
                                 </ul>
                             </div>
                             <div class="header-info-right">
@@ -30,24 +31,36 @@
                         <!-- Logo -->
                         <div class="col-xl-3 col-lg-3 col-md-3">
                             <div class="logo">
-                                <a href="{{route('home-page')}}"><h1 class="text-danger text-bold">Laravel News</h1></a>
+                                <a href="{{ route('home-page') }}">
+                                    <h1 class="text-danger text-bold">Laravel News</h1>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             {{-- Marquee --}}
-            <marquee behavior="scroll" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"
-                width="100%" direction="left" height="auto">
-                <a href="#" style="color:black;">Marquee right to left one.</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <a href="#" style="color:black;">Marquee right to left two.</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <a href="#" style="color:black;">Marquee right to left three.</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                <a href="#" style="color:black;">Marquee right to left four.</a>
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-            </marquee>
+            @php
+                $post = App\Models\Post::orderBy('order', 'desc')
+                    ->limit(4)
+                    ->latest()
+                    ->get();
+            @endphp
+            <div class="mt-3 mb-3">
+                <marquee behavior="scroll" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"
+                    width="100%" direction="left" height="auto">
+                    @foreach ($post as $item)
+                        <a href="{{route('single-post-frontend', $item->id)}}" style="color:black;">
+                            @if (session()->get('language') == 'khmer')
+                                {{ Str::words($item->title_kh, 30) }}
+                            @else
+                                {{ Str::words($item->title_en, 30) }}
+                            @endif
+                        </a>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                    @endforeach
+                </marquee>
+            </div>
             {{-- Navigation Bar --}}
             <div class="header-bottom header-sticky">
                 <div class="container">
@@ -64,7 +77,7 @@
                                         $category = App\Models\Category::all();
                                     @endphp
                                     <ul id="navigation">
-                                        <li><a href="{{route('home-page')}}">Home</a></li>
+                                        <li><a href="{{ route('home-page') }}">Home</a></li>
                                         @foreach ($category as $categ_data)
                                             <li><a href=""> {{ $categ_data->category_en }} </a>
                                                 @php

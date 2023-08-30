@@ -31,7 +31,7 @@ Route::get('/', function () {
 
     $data = [
         'post_hero' => Post::latest()->limit(4)->get(),
-        'highlightPost' => Post::latest()->first(),
+        'latestPost' => Post::latest()->limit(9)->get(),
         'miniHighlightPost1' => Post::skip(0)->limit(3)->get(),
         'miniHighlightPost2' => Post::skip(3)->limit(3)->get(),
 

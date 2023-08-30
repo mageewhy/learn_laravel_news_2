@@ -4,7 +4,7 @@
     <div class="sidepanel-inner d-flex flex-column">
         <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
         <div class="app-branding">
-            <a class="app-logo" href="index.html"><h3 class="text-danger text-bold">Laravel News</h3></a>
+            <a class="app-logo" href="{{route('home-page')}}"><h3 class="text-danger text-bold">Laravel News</h3></a>
 
         </div><!--//app-branding-->
 

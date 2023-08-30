@@ -1,26 +1,23 @@
 @extends('frontend.frontend-layout')
 @section('frontend-content')
     <main>
-        <div class="container mt-5 ">
-            <div class="swiper">
-                <div class="swiper-wrapper">
-                    @foreach ($post_hero as $hero_data)
-                        <div class="swiper-slide" data-swiper-autoplay="2000">
-                            <img class="d-block w-100" height="500px" src="{{ asset('images/' . $hero_data->image) }}"
-                                alt="hero slide">
-                        </div>
-                    @endforeach
-                </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
-
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
-                <!-- If we need scrollbar -->
-                <div class="swiper-scrollbar"></div>
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($post_hero as $key => $data)
+                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                        <img class="d-block w-100" style="height: 600px;" src="{{ asset('images/' . $data->image) }}"
+                            alt="Hero Slide" />
+                    </div>
+                @endforeach
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
         <!-- Trending Area Start -->
         <div class="trending-area fix">
@@ -32,88 +29,38 @@
                             <div class="row p-2 shadow-sm mb-5 bg-white rounded">
                                 <div class="col-lg-12">
                                     <div class="section-tittle mb-30">
-                                        <h3>Weekly Top News</h3>
+                                        <h3>Trending News</h3>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/trending/trending_bottom1.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color1">Lifestyple</span>
-                                            <h4><a href="details.html">Get the Illusion of Fuller Lashes by
-                                                    “Mascng.”</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/trending/trending_bottom2.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color2">Sports</span>
-                                            <h4>
-                                                <h4><a href="details.html">Get the Illusion of Fuller Lashes by
-                                                        “Mascng.”</a></h4>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/trending/trending_bottom3.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Travels</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
+                                @foreach ($trendingPost as $item)
+                                    <div class="col-lg-4">
+                                        <div class="single-bottom mb-35">
+                                            <div class="trend-bottom-img mb-30">
+                                                <img src="{{ asset('images/' . $item->image) }}" alt="LatestPost">
+                                            </div>
+                                            <div class="trend-bottom-cap">
+                                                <span class="color1">
+                                                    @if (session()->get('language') == 'khmer')
+                                                        {{ $item->category->category_kh }}
+                                                    @else
+                                                        {{ $item->category->category_en }}
+                                                    @endif
+                                                </span>
+                                                <h4>
+                                                    <a href="{{ route('single-post-frontend', $item->id) }}">
+                                                        @if (session()->get('language') == 'khmer')
+                                                            {{ Str::words($item->title_kh, 10) }}
+                                                        @else
+                                                            {{ Str::words($item->title_en, 10) }}
+                                                        @endif
+                                                    </a>
+                                                </h4>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 ">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/news/whatNews1.jpg') }}" alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Night Party</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 ">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/news/whatNews2.jpg') }}" alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Night Party</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 ">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/news/whatNews3.jpg') }}" alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Night Party</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                                 <!--Start pagination -->
-                                <div class="pagination-area pb-45 text-center col-12">
+                                {{-- <div class="pagination-area pb-45 text-center col-12">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-xl-12">
@@ -137,98 +84,45 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- End pagination  -->
                             </div>
 
                             <div class="row p-2 shadow-sm mb-5 bg-white rounded">
                                 <div class="col-lg-12">
                                     <div class="section-tittle mb-30">
-                                        <h3>Recent News</h3>
+                                        <h3>Lastest News</h3>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/trending/trending_bottom1.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color1">Lifestyple</span>
-                                            <h4><a href="details.html">Get the Illusion of Fuller Lashes by
-                                                    “Mascng.”</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/trending/trending_bottom2.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color2">Sports</span>
-                                            <h4>
-                                                <h4><a href="details.html">Get the Illusion of Fuller Lashes by
-                                                        “Mascng.”</a></h4>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/trending/trending_bottom3.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Travels</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
+                                @foreach ($latestPost as $item)
+                                    <div class="col-lg-4">
+                                        <div class="single-bottom mb-35">
+                                            <div class="trend-bottom-img mb-30">
+                                                <img src="{{ asset('images/' . $item->image) }}" alt="Latest News">
+                                            </div>
+                                            <div class="trend-bottom-cap">
+                                                <span class="color2">
+                                                    @if (session()->get('language') == 'khmer')
+                                                        {{ $item->category->category_kh }}
+                                                    @else
+                                                        {{ $item->category->category_en }}
+                                                    @endif
+                                                </span>
+                                                <h4>
+                                                    <a href="{{ route('single-post-frontend', $item->id) }}">
+                                                        @if (session()->get('language') == 'khmer')
+                                                            {{ Str::words($item->title_kh, 10) }}
+                                                        @else
+                                                            {{ Str::words($item->title_en, 10) }}
+                                                        @endif
+                                                    </a>
+                                                </h4>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 ">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/news/whatNews1.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Night Party</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 ">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/news/whatNews2.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Night Party</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 ">
-                                    <div class="single-bottom mb-35">
-                                        <div class="trend-bottom-img mb-30">
-                                            <img src="{{ asset('frontend/assets/img/news/whatNews3.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="trend-bottom-cap">
-                                            <span class="color3">Night Party</span>
-                                            <h4><a href="details.html"> Welcome To The Best Model Winner
-                                                    Contest</a></h4>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                                 <!--Start pagination -->
-                                <div class="pagination-area pb-45 text-center col-12">
+                                {{-- <div class="pagination-area pb-45 text-center col-12">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-xl-12">
@@ -254,114 +148,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- End pagination  -->
                             </div>
                         </div>
                         <!-- Right content -->
-                        <div class="col-lg-4">
-                            <div class="trand-right-single d-flex">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item"
-                                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color1">Video</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right1.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color1">Concert</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right2.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color3">sea beach</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right3.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color2">Bike Show</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right4.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color4">Sea beach</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right5.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color1">Skeping</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item"
-                                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color1">Video</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right5.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color1">Skeping</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right4.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color4">Sea beach</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right5.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color1">Skeping</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset('frontend/assets/img/trending/right4.jpg') }}" alt="">
-                                </div>
-                                <div class="trand-right-cap">
-                                    <span class="color4">Sea beach</span>
-                                    <h4><a href="details.html">Welcome To The Best Model Winner Contest</a></h4>
-                                </div>
-                            </div>
-                        </div>
+                        @include('frontend.partials.sidebar')
                     </div>
                 </div>
             </div>
@@ -385,8 +177,7 @@
                             <div class="weekly2-news-active dot-style d-flex dot-style">
                                 <div class="weekly2-single">
                                     <div class="weekly2-img">
-                                        <img src="{{ asset('frontend/assets/img/news/weekly2News1.jpg') }}"
-                                            alt="">
+                                        <img src="{{ asset('frontend/assets/img/news/weekly2News1.jpg') }}" alt="">
                                     </div>
                                     <div class="weekly2-caption">
                                         <span class="color1">Corporate</span>
@@ -396,8 +187,7 @@
                                 </div>
                                 <div class="weekly2-single">
                                     <div class="weekly2-img">
-                                        <img src="{{ asset('frontend/assets/img/news/weekly2News2.jpg') }}"
-                                            alt="">
+                                        <img src="{{ asset('frontend/assets/img/news/weekly2News2.jpg') }}" alt="">
                                     </div>
                                     <div class="weekly2-caption">
                                         <span class="color1">Event night</span>
@@ -407,8 +197,7 @@
                                 </div>
                                 <div class="weekly2-single">
                                     <div class="weekly2-img">
-                                        <img src="{{ asset('frontend/assets/img/news/weekly2News3.jpg') }}"
-                                            alt="">
+                                        <img src="{{ asset('frontend/assets/img/news/weekly2News3.jpg') }}" alt="">
                                     </div>
                                     <div class="weekly2-caption">
                                         <span class="color1">Corporate</span>
@@ -418,8 +207,7 @@
                                 </div>
                                 <div class="weekly2-single">
                                     <div class="weekly2-img">
-                                        <img src="{{ asset('frontend/assets/img/news/weekly2News4.jpg') }}"
-                                            alt="">
+                                        <img src="{{ asset('frontend/assets/img/news/weekly2News4.jpg') }}" alt="">
                                     </div>
                                     <div class="weekly2-caption">
                                         <span class="color1">Event time</span>
@@ -429,8 +217,7 @@
                                 </div>
                                 <div class="weekly2-single">
                                     <div class="weekly2-img">
-                                        <img src="{{ asset('frontend/assets/img/news/weekly2News4.jpg') }}"
-                                            alt="">
+                                        <img src="{{ asset('frontend/assets/img/news/weekly2News4.jpg') }}" alt="">
                                     </div>
                                     <div class="weekly2-caption">
                                         <span class="color1">Corporate</span>
