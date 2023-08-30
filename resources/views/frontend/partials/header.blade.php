@@ -36,6 +36,11 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9">
+                            <div class="header-banner f-right ">
+                                <img src="{{ asset('frontend/assets/img/hero/header_card.jpg') }}" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,7 +55,7 @@
                 <marquee behavior="scroll" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"
                     width="100%" direction="left" height="auto">
                     @foreach ($post as $item)
-                        <a href="{{route('single-post-frontend', $item->id)}}" style="color:black;">
+                        <a href="{{ route('single-post-frontend', $item->id) }}" style="color:black;">
                             @if (session()->get('language') == 'khmer')
                                 {{ Str::words($item->title_kh, 30) }}
                             @else
@@ -68,31 +73,77 @@
                         <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
                             <!-- sticky -->
                             <div class="sticky-logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="{{ route('home-page') }}">
+                                    <h1 class="text-danger text-bold">Laravel News</h1>
+                                </a>
                             </div>
                             <!-- Main-menu -->
-                            <div class="main-menu d-none d-md-block">
+                            <div class="main-menu d-none d-lg-block">
                                 <nav>
                                     @php
                                         $category = App\Models\Category::all();
                                     @endphp
                                     <ul id="navigation">
-                                        <li><a href="{{ route('home-page') }}">Home</a></li>
+                                        <li>
+                                            @if (session()->get('language') == 'khmer')
+                                                <a href="{{ route('lang.english') }}" class="p-2 ml-4"><img
+                                                        style="width: 25px; height: 25px;"
+                                                        src="{{ asset('frontend/assets/uk.png') }}" alt="English"></a>
+                                            @else
+                                                <a href="{{ route('lang.khmer') }}" class="p-2 ml-4"><img
+                                                        style="width: 25px; height: 25px;"
+                                                        src="{{ asset('frontend/assets/cambodia.png') }}"
+                                                        alt="English"></a>
+                                            @endif
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('home-page') }}">
+                                                @if (session()->get('language') == 'khmer')
+                                                    ទំព័រដើម
+                                                @else
+                                                    Home
+                                                @endif
+                                            </a>
+                                        </li>
                                         @foreach ($category as $categ_data)
-                                            <li><a href=""> {{ $categ_data->category_en }} </a>
+                                            <li>
+                                                <a href="{{ route('category-frontend', $categ_data->id) }}">
+                                                    @if (session()->get('language') == 'khmer')
+                                                        {{ $categ_data->category_kh }}
+                                                    @else
+                                                        {{ $categ_data->category_en }}
+                                                    @endif
+                                                </a>
                                                 @php
                                                     $subcategory = App\Models\Subcategory::where('category_id', $categ_data->id)->get();
                                                 @endphp
                                                 <ul class="submenu">
                                                     @forelse ($subcategory as $sub_data)
-                                                        <li><a href="">{{ $sub_data->sub_category_en }}</a></li>
+                                                        <li>
+                                                            <a
+                                                                href="{{ route('subcategory-frontend', $sub_data->id) }}">
+                                                                @if (session()->get('language') == 'khmer')
+                                                                    {{ $sub_data->sub_category_kh }}
+                                                                @else
+                                                                    {{ $sub_data->sub_category_en }}
+                                                                @endif
+                                                            </a>
+                                                        </li>
                                                     @empty
                                                         <li><a href="#">No Subcategory</a></li>
                                                     @endforelse
                                                 </ul>
                                             </li>
                                         @endforeach
-                                        <li><a href="latest_news.html">Latest News</a></li>
+                                        <li>
+                                            <a href="{{ route('latest-news-frontend') }}">
+                                                @if (session()->get('language') == 'khmer')
+                                                    ព័ត៌មានថ្មីៗ
+                                                @else
+                                                    Latest News
+                                                @endif
+                                            </a>
+                                        </li>
                                         </li>
                                     </ul>
                                 </nav>
@@ -108,6 +159,7 @@
                                     </form>
                                 </div>
                             </div>
+
                         </div>
                         <!-- Mobile Menu -->
                         <div class="col-12">

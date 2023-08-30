@@ -31,22 +31,12 @@ Route::get('/', function () {
 
     $data = [
         'post_hero' => Post::latest()->limit(4)->get(),
-        'latestPost' => Post::latest()->limit(9)->get(),
+        'latestPost' => Post::latest()->limit(15)->paginate(9),
         'miniHighlightPost1' => Post::skip(0)->limit(3)->get(),
         'miniHighlightPost2' => Post::skip(3)->limit(3)->get(),
 
-        'category1PostHighlight' => Post::where('category_id', $category1['id'])->latest()->first(),
-        'category1PostHighlightUnder' => Post::where('category_id', $category1['id'])->skip(2)->limit(2)->get(),
-        'category1PostHighlight2' => Post::where('category_id', $category1['id'])->skip(4)->latest()->first(),
-        'category2PostHighlight' => Post::where('category_id', $category2['id'])->latest()->first(),
-        // 'category3PostHighlight' => Post::where('category_id', $category3['id'])->latest()->first(),
-
-        'category1Post' => Post::where('category_id', $category1['id'])->skip(0)->limit(4)->get(),
-        'category2Post' => Post::where('category_id', $category2['id'])->skip(0)->limit(2)->get(),
-        'category2Post2' => Post::where('category_id', $category2['id'])->skip(2)->limit(2)->get(),
-        // 'category3Post' => Post::where('category_id', $category3['id'])->skip(0)->get(),
-
-        'trendingPost' => Post::orderBy('order', 'desc')->limit(5)->latest()->get(),
+        'trendingPost' => Post::orderBy('order', 'desc')->limit(5)->get(),
+        'weeklyTopPost' => Post::orderBy('order', 'desc')->limit(5)->latest()->get(),
     ];
 
 
@@ -55,26 +45,37 @@ Route::get('/', function () {
 })->name('home-page');
 
 Route::get('/category/{id}', function($id){
+    $date = Carbon::now()->toFormattedDayDateString();
     $category = Category::where('id', $id)->first();
+    // $subcategory = Subcategory::where('category_id', $id)->get();
+    // $post_id = Post::where('category_id', $id)->get();
     $post = Post::where('category_id', $id)->latest()->paginate(4);
 
-    return view('frontend.category-page', compact('category', 'post'));
+    return view('frontend.category-page', compact('category', 'post', 'date'));
 })->name('category-frontend');
 
 Route::get('/subcategory/{id}', function($id){
-    $subcategory = SubCategory::where('id', $id)->first();
+    $date = Carbon::now()->toFormattedDayDateString();
+    $subcategory = Subcategory::where('id', $id)->first();
     $post = Post::where('sub_category_id', $id)->latest()->paginate(4);
 
-    return view('frontend.subcategory-page', compact('subcategory', 'post'));
+    return view('frontend.subcategory-page', compact('subcategory', 'post', 'date'));
 })->name('subcategory-frontend');
 
 Route::get('/single-post/{id}', function($id){
+    $date = Carbon::now()->toFormattedDayDateString();
     Post::where('id', $id)->increment('order');
     $post = Post::where('id', $id)->first();
 
-    return view('frontend.single-post', compact('post'));
+    return view('frontend.single-post', compact('post', 'date'));
 })->name('single-post-frontend');
 
+Route::get('/latest-news', function(){
+    $date = Carbon::now()->toFormattedDayDateString();
+    $post = Post::latest()->limit(10)->paginate(4);
+
+    return view('frontend.latest-news', compact('post', 'date'));
+})->name('latest-news-frontend');
 //============================================================================================================================//
 
 
