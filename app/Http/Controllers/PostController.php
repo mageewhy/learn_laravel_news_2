@@ -27,7 +27,6 @@ class PostController extends Controller
     }
 
     public function addPost(){
-        // $categories = Category::all();
         $post = Post::all();
         $categories = Category::all();
         $subcategories = Subcategory::all();
@@ -82,9 +81,7 @@ class PostController extends Controller
             ]);
         }
 
-
-
-        return redirect()->route('admin.post')->with('success', 'Post has been added successfully!');
+        return redirect()->route('admin.posts')->with('success', 'Post has been added successfully!');
     }
 
     public function editPost($post_id){
@@ -173,7 +170,7 @@ class PostController extends Controller
 
         $subcategories = Subcategory::where('category_id', $request->cat_id)->get();
 
-        $sub_cat_data = '<option value="">Select Sub Category</option>';
+        $sub_cat_data = '<option value="">Select Subcategory</option>';
 
         foreach ($subcategories as $key => $value) {
             $sub_cat_data.='<option value="'.$value->id.'">'.$value->sub_category_kh.' | '.$value->sub_category_en.'</option>';
@@ -190,7 +187,7 @@ class PostController extends Controller
         $category_query = $request->input('select-category-query');
         $subcategory_query = $request->input('select-subcategory-query');
 
-        
+
         if($category_query == null && $subcategory_query == null && $search_text == null){
             $post = Post::paginate(5);
             $category_id = $category_query;

@@ -50,7 +50,7 @@
                                             @foreach ($subcategories as $item)
                                                 <option value="{{ $item->id }}"
                                                     class="parent-{{ $item->category_id }} subcategory"
-                                                    @if ($subcategory_id != null) 
+                                                    @if ($subcategory_id != null)
                                                         {{ $item->id == $subcategory_id->id ? 'selected' : '' }}
                                                     @else
                                                         {{ $item->id == $subcategory_id ? 'selected' : '' }} @endif>
@@ -179,12 +179,4 @@
         // });
     });
 
-    $(document).ready(function() {
-            toastr.options.timeOut = 10000;
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
-            @elseif (Session::has('success'))
-                toastr.success('{{ Session::get('success') }}');
-            @endif
-        });
 </script>

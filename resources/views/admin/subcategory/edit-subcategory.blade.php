@@ -13,21 +13,23 @@
                 <div class="app-card app-card-orders-table shadow-sm mb-5">
                     <div class="app-card-body">
                         <div class="col-12 col-md-8">
-                            <form class="p-4" method="POST" action="{{ route('admin.update-subcategory', $subcategory->id) }}">
+                            <form class="p-4" method="POST"
+                                action="{{ route('admin.update-subcategory', $subcategory->id) }}">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="category_id" class="form-label">Main Category</label>
+                                    <label for="category_id" style="font-weight: bold;" class="form-label">Main Category</label>
                                     <select class="form-select w-auto" name="category_id" id="category_id">
                                         <option selected>Select Category</option>
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}" {{ $item->id == $subcategory->category_id ? 'selected' : '' }}>
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == $subcategory->category_id ? 'selected' : '' }}>
                                                 {{ $item->category_kh }} || {{ $item->category_en }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="sub_category_kh" class="form-label">Subcategory Khmer</label>
+                                    <label for="sub_category_kh" style="font-weight: bold;" class="form-label">Subcategory Khmer</label>
                                     <input type="text" class="form-control" id="sub_category_kh" name="sub_category_kh"
                                         value="{{ $subcategory->sub_category_kh }}" required>
                                     @error('sub_category_kh')
@@ -35,7 +37,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="sub_category_en" class="form-label">Subcategory English</label>
+                                    <label for="sub_category_en" style="font-weight: bold;" class="form-label">Subcategory English</label>
                                     <input type="text" class="form-control" id="sub_category_kh" name="sub_category_en"
                                         value="{{ $subcategory->sub_category_en }}" required>
                                     @error('sub_category_en')
@@ -48,12 +50,13 @@
                         </div>
                     </div><!--//app-card-body-->
                 </div><!--//app-card-->
-            </div><!--//container-fluid-->
-        </div><!--//app-content-->
-    @endsection
+            </div><!--//table-content-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+@endsection
 
-    {{-- Input with Popover --}}
-    {{-- <div class="mb-3">
+{{-- Input with Popover --}}
+{{-- <div class="mb-3">
         <label for="setting-input-1" class="form-label">Business Name<span
                 class="ms-2" data-bs-container="body" data-bs-toggle="popover"
                 data-bs-trigger="hover focus" data-bs-placement="top"

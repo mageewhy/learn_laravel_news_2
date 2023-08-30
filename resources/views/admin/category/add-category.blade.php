@@ -16,7 +16,7 @@
                             <form class="p-4" method="POST" action="{{ route('admin.store-category') }}">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="category_kh" class="form-label">Category Khmer</label>
+                                    <label for="category_kh" style="font-weight: bold;" class="form-label">Category Khmer</label>
                                     <input type="text" class="form-control" id="category_kh" name="category_kh"
                                         value="{{ old('category_kh') }}" required>
                                     @error('category_kh')
@@ -24,7 +24,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="category_en" class="form-label">Category English</label>
+                                    <label for="category_en" style="font-weight: bold;" class="form-label">Category English</label>
                                     <input type="text" class="form-control" id="category_kh" name="category_en"
                                         value="{{ old('category_en') }}" required>
                                     @error('category_en')
@@ -37,12 +37,13 @@
                         </div>
                     </div><!--//app-card-body-->
                 </div><!--//app-card-->
-            </div><!--//container-fluid-->
-        </div><!--//app-content-->
-    @endsection
+            </div><!--//table-content-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+@endsection
 
-    {{-- Input with Popover --}}
-    {{-- <div class="mb-3">
+{{-- Input with Popover --}}
+{{-- <div class="mb-3">
         <label for="setting-input-1" class="form-label">Business Name<span
                 class="ms-2" data-bs-container="body" data-bs-toggle="popover"
                 data-bs-trigger="hover focus" data-bs-placement="top"
