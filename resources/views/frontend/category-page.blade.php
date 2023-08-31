@@ -45,7 +45,7 @@
                                                                     @endif
                                                                 </span>
                                                                 <h4>
-                                                                    <a href="#">
+                                                                    <a href="{{route('single-post-frontend', $item->id)}}">
                                                                         @if (session()->get('language') == 'khmer')
                                                                             {{ Str::words($item->title_kh, 10) }}
                                                                         @else

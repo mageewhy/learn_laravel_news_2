@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-4  col-sm-6">
+                {{-- <div class="col-xl-3 col-lg-3 col-md-4  col-sm-6">
                     <div class="single-footer-caption mt-60">
                         <div class="footer-tittle">
                             <h4>Newsletter</h4>
@@ -54,38 +54,24 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
                     <div class="single-footer-caption mb-50 mt-60">
                         <div class="footer-tittle">
-                            <h4>Instagram Feed</h4>
+                            <h4>News Feed Image</h4>
                         </div>
                         <div class="instagram-gellay">
+                            @php
+                                $post = App\Models\Post::latest()->limit(6)->get();
+                            @endphp
                             <ul class="insta-feed">
-                                <li><a href="#"><img
-                                            src="{{ asset('frontend/assets/img/post/instra1.jpg') }}"
-                                            alt=""></a>
-                                </li>
-                                <li><a href="#"><img
-                                            src="{{ asset('frontend/assets/img/post/instra2.jpg') }}"
-                                            alt=""></a>
-                                </li>
-                                <li><a href="#"><img
-                                            src="{{ asset('frontend/assets/img/post/instra3.jpg') }}"
-                                            alt=""></a>
-                                </li>
-                                <li><a href="#"><img
-                                            src="{{ asset('frontend/assets/img/post/instra4.jpg') }}"
-                                            alt=""></a>
-                                </li>
-                                <li><a href="#"><img
-                                            src="{{ asset('frontend/assets/img/post/instra5.jpg') }}"
-                                            alt=""></a>
-                                </li>
-                                <li><a href="#"><img
-                                            src="{{ asset('frontend/assets/img/post/instra6.jpg') }}"
-                                            alt=""></a>
-                                </li>
+                                @foreach ($post as $item)
+                                    <li>
+                                        <a href="{{route('single-post-frontend', $item->id)}}">
+                                            <img src="{{ asset('images/' . $item->image) }}" alt="{{ $item->image }}">
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

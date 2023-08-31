@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchQueryController;
@@ -150,6 +151,12 @@ Route::middleware([
             //ajax
             Route::get('/get-subcategory-option', 'getSubOpt')->name('admin.get-subcategory-option');
 
+        });
+
+        Route::controller(CommentController::class)->group(function(){
+            Route::get('/comments', 'viewComment')->name('admin.comments');
+
+            Route::get('/delete-comments/{comment_id}', 'deleteComment')->name('admin.delete-comment');
         });
 
     });
