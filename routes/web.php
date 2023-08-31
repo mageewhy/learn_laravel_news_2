@@ -8,6 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchQueryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
@@ -68,8 +69,9 @@ Route::get('/single-post/{id}', function($id){
     $date = Carbon::now()->toFormattedDayDateString();
     Post::where('id', $id)->increment('order');
     $post = Post::where('id', $id)->first();
+    $comment = Comment::where('post_id', $id)->get();
 
-    return view('frontend.single-post', compact('post', 'date'));
+    return view('frontend.single-post', compact('post', 'date', 'comment'));
 })->name('single-post-frontend');
 
 Route::get('/latest-news', function(){
@@ -80,6 +82,10 @@ Route::get('/latest-news', function(){
 })->name('latest-news-frontend');
 
 Route::get('/search-news', [SearchQueryController::class, 'searchQuery'])->name('search-query-frontend');
+
+Route::controller(CommentController::class)->group(function(){
+    Route::post('/add-new-comment/{post_id}', 'storeComment')->name('add-comment-frontend');
+});
 //============================================================================================================================//
 
 
@@ -154,9 +160,11 @@ Route::middleware([
         });
 
         Route::controller(CommentController::class)->group(function(){
-            Route::get('/comments', 'viewComment')->name('admin.comments');
+            Route::get('/post/{post_id}/comments', 'viewCommentOfPost')->name('admin.comments-of-post');
 
             Route::get('/delete-comments/{comment_id}', 'deleteComment')->name('admin.delete-comment');
+
+            Route::get('/search/comment/post/{post_id}', 'searchQuery')->name('comment-searchQuery');
         });
 
     });

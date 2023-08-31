@@ -96,6 +96,7 @@
                                         <th class="cell">Created At</th>
                                         <th class="cell">Updated At</th>
                                         <th class="cell">Action</th>
+                                        <th class="cell">Comments</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,6 +119,10 @@
                                                 <a class="btn btn-danger"
                                                     href="{{ route('admin.delete-category', $item->id) }}"
                                                     id="delete">Delete</a>
+                                            </td>
+                                            <td class="cell">
+                                                <a class="btn btn-secondary"
+                                                    href="{{ route('admin.comments-of-post', $item->id) }}">View Comments</a>
                                             </td>
                                         </tr>
                                     @empty

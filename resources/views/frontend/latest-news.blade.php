@@ -49,7 +49,7 @@
                                     </p>
                                     <ul class="blog-info-link">
                                         <li>
-                                            <a href="#"><i class="fa fa-user"></i>
+                                            <span><i class="fa fa-user"></i>
                                                 @if (session()->get('language') == 'khmer')
                                                     {{ $item->category->category_kh }},
                                                     {{ $item->subcategory->sub_category_kh }}
@@ -57,12 +57,12 @@
                                                     {{ $item->category->category_en }},
                                                     {{ $item->subcategory->sub_category_en }}
                                                 @endif
-                                            </a>
+                                            </span>
                                         </li>
                                         <li>
-                                            <a href="#"><i class="fa fa-comments"></i> 03 Comments
-
-                                            </a>
+                                            <span><i class="fa fa-comments"></i>
+                                                {{ $item->comment->count()}} Comments
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
