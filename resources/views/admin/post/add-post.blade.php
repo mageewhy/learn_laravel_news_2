@@ -30,8 +30,8 @@
                                     </div>
 
                                     <div class="mb-3 col-6">
-                                        <label for="sub_category_id" style="font-weight: bold;" class="form-label">Subcategory</label>
-                                        <select class="form-select " name="sub_category_id" id="subcategory">
+                                        <label for="subcategory_id" style="font-weight: bold;" class="form-label">Subcategory</label>
+                                        <select class="form-select " name="subcategory_id" id="subcategory">
                                             <option value="">Select Subcategory</option>
                                         </select>
                                     </div>

@@ -37,7 +37,7 @@ class PostController extends Controller
     public function storePost(Request $request){
         $request->validate([
             'category_id' => 'required',
-            'sub_category_id' => 'required',
+            'subcategory_id' => 'required',
             'title_kh' => 'required|min:5|max:256',
             'title_en' => 'required|min:5|max:256',
             'description_kh' => 'required',
@@ -55,7 +55,7 @@ class PostController extends Controller
 
             Post::create([
                 'category_id' => $request->category_id,
-                'sub_category_id' => $request->sub_category_id,
+                'subcategory_id' => $request->subcategory_id,
                 'title_kh' => $request->title_kh,
                 'title_en' => $request->title_en,
                 'description_kh' => $request->description_kh,
@@ -69,7 +69,7 @@ class PostController extends Controller
         } else {
             Post::create([
                 'category_id' => $request->category_id,
-                'sub_category_id' => $request->sub_category_id,
+                'subcategory_id' => $request->subcategory_id,
                 'title_kh' => $request->title_kh,
                 'title_en' => $request->title_en,
                 'description_kh' => $request->description_kh,
@@ -123,7 +123,7 @@ class PostController extends Controller
             $request->image->move(public_path('images'), $imageName);
 
             $post->category_id = $request->input('category_id');
-            $post->sub_category_id = $request->input('sub_category_id');
+            $post->subcategory_id = $request->input('subcategory_id');
             $post->title_kh = $request->input('title_kh');
             $post->title_en = $request->input('title_en');
             $post->description_kh = $request->input('description_kh');
@@ -134,7 +134,7 @@ class PostController extends Controller
 
         } else {
             $post->category_id = $request->input('category_id');
-            $post->sub_category_id = $request->input('sub_category_id');
+            $post->subcategory_id = $request->input('subcategory_id');
             $post->title_kh = $request->input('title_kh');
             $post->title_en = $request->input('title_en');
             $post->description_kh = $request->input('description_kh');
@@ -169,11 +169,18 @@ class PostController extends Controller
     public function getSubOpt(Request $request){
 
         $subcategories = Subcategory::where('category_id', $request->cat_id)->get();
-
+        $subcategories_all = Subcategory::all();
         $sub_cat_data = '<option value="">Select Subcategory</option>';
 
-        foreach ($subcategories as $key => $value) {
-            $sub_cat_data.='<option value="'.$value->id.'">'.$value->sub_category_kh.' | '.$value->sub_category_en.'</option>';
+        if($request->cat_id == null){
+            foreach($subcategories_all as $key => $value){
+                $sub_cat_data.='<option value="0">'.$value->sub_category_kh.' | '.$value->sub_category_en.'</option>';
+            }
+        }
+        else {
+            foreach ($subcategories as $key => $value) {
+                $sub_cat_data.='<option value="'.$value->id.'">'.$value->sub_category_kh.' | '.$value->sub_category_en.'</option>';
+            }
         }
         return $sub_cat_data;
 
@@ -195,8 +202,9 @@ class PostController extends Controller
         }
         else if($category_query != null && $subcategory_query != null && $search_text != null){
             $post = Post::where('title_en', 'LIKE', '%'.$search_text.'%')
-            ->where('category_id', $category_query)
-            ->where('sub_category_id', $subcategory_query)
+            ->orWhere('title_kh', 'LIKE', '%'.$search_text.'%')
+            ->orWhere('category_id', $category_query)
+            ->orWhere('subcategory_id', $subcategory_query)
             ->paginate(5);
             $category_id = Category::find($category_query);
             $subcategory_id = Subcategory::find($subcategory_query);
@@ -208,14 +216,14 @@ class PostController extends Controller
             $subcategory_id = $subcategory_query;
         }
         else if($category_query == null && $subcategory_query !== null && $search_text == null){
-            $post = Post::where('sub_category_id', $subcategory_query)
+            $post = Post::where('subcategory_id', $subcategory_query)
             ->paginate(5);
             $category_id = $category_query;
             $subcategory_id = Subcategory::find($subcategory_query);
         }
         else if($category_query != null && $subcategory_query != null && $search_text == null){
             $post = Post::where('category_id', $category_query)
-            ->where('sub_category_id', $subcategory_query)
+            ->orWhere('subcategory_id', $subcategory_query)
             ->paginate(5);
             $category_id = Category::find($category_query);
             $subcategory_id = Subcategory::find($subcategory_query);
@@ -223,17 +231,19 @@ class PostController extends Controller
         }
         else if($category_query != null && $subcategory_query == null && $search_text != null){
             $post = Post::where('category_id', $category_query)
-            ->where(function ($query) use ($search_text) {
-                $query->where('title_en', 'LIKE', '%'.$search_text.'%');
+            ->orWhere(function ($query) use ($search_text) {
+                $query->where('title_en', 'LIKE', '%'.$search_text.'%')
+                ->orWhere('title_kh', 'LIKE', '%'.$search_text.'%');
             })
             ->paginate(5);
             $category_id = Category::find($category_query);
             $subcategory_id = $subcategory_query;
         }
         else if($category_query == null && $subcategory_query != null && $search_text != null){
-            $post = Post::where('sub_category_id', $subcategory_query)
-            ->where(function ($query) use ($search_text) {
-                $query->where('title_en', 'LIKE', '%'.$search_text.'%');
+            $post = Post::where('subcategory_id', $subcategory_query)
+            ->orWhere(function ($query) use ($search_text) {
+                $query->where('title_en', 'LIKE', '%'.$search_text.'%')
+                ->orWhere('title_kh', 'LIKE', '%'.$search_text.'%');
             })
             ->paginate(5);
             $category_id = $category_query;
@@ -241,7 +251,8 @@ class PostController extends Controller
         }
         else if($category_query == null && $subcategory_query == null && $search_text != null){
             $post = Post::where(function ($query) use ($search_text) {
-                $query->where('title_en', 'LIKE', '%'.$search_text.'%');
+                $query->where('title_en', 'LIKE', '%'.$search_text.'%')
+                ->orWhere('title_kh', 'LIKE', '%'.$search_text.'%');
             })
             ->paginate(5);
             $category_id = $category_query;

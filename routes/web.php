@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchQueryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Models\Category;
 use App\Models\Post;
@@ -57,7 +58,7 @@ Route::get('/category/{id}', function($id){
 Route::get('/subcategory/{id}', function($id){
     $date = Carbon::now()->toFormattedDayDateString();
     $subcategory = Subcategory::where('id', $id)->first();
-    $post = Post::where('sub_category_id', $id)->latest()->paginate(4);
+    $post = Post::where('subcategory_id', $id)->latest()->paginate(4);
 
     return view('frontend.subcategory-page', compact('subcategory', 'post', 'date'));
 })->name('subcategory-frontend');
@@ -76,6 +77,8 @@ Route::get('/latest-news', function(){
 
     return view('frontend.latest-news', compact('post', 'date'));
 })->name('latest-news-frontend');
+
+Route::get('/search-news', [SearchQueryController::class, 'searchQuery'])->name('search-query-frontend');
 //============================================================================================================================//
 
 

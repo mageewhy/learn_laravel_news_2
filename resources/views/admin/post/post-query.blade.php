@@ -151,7 +151,7 @@
 <script>
     $(document).ready(function() {
         $('#category').change(function(e) {
-            var cat_id = $(this).val();
+            var cat_id = $(this).val().prop('selected', true);
             // alert('hello');
 
             $('#subcategory').html('<option value="">Select Sub Category</option>');
@@ -177,6 +177,7 @@
         //         false); //enable subcategory of selected category/parent
         //     $(".parent-" + $(this).val()).show();
         // });
+
     });
 
 </script>
