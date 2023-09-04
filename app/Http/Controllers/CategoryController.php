@@ -69,6 +69,7 @@ class CategoryController extends Controller
             $category->delete();
             $category->subcategory()->delete();
             $category->posts()->delete();
+            $category->posts()->comment()->delete();
             return redirect()->back()->with('success', 'Category with its Subcategory and Posts have been deleted!');
         }
         else {
