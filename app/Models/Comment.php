@@ -15,8 +15,4 @@ class Comment extends Model
         return $this->belongsTo(Post::class, 'post_id');
     }
 
-    public function category(){
-        return $this->belongsTo(Category::class, 'category_id');
-    }
-
 }

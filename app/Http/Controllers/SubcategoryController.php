@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use App\Models\Subcategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -77,6 +78,8 @@ class SubCategoryController extends Controller
         $sub_category = Subcategory::findOrFail($sub_category_id);
 
         if($sub_category){
+            $post = Post::where('subcategory_id', $sub_category_id)->firstOrFail();
+            $post->comment()->delete();
             $sub_category->posts()->delete();
             $sub_category->delete();
             return redirect()->back()->with('success', 'Subcategory with its Posts have been deleted!');

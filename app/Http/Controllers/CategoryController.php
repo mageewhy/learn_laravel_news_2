@@ -64,18 +64,14 @@ class CategoryController extends Controller
     public function deleteCategory($category_id){
 
         $category = Category::findOrFail($category_id);
-
+        
         if($category){
-
+            $post = Post::where('category_id', $category_id)->firstOrFail();
+            
             $category->delete();
             $category->subcategory()->delete();
+            $post->comment()->delete();
             $category->posts()->delete();
-
-            $post = $category->posts;
-            foreach($post as $data){
-                $data = Post::findOrFail($data->id);
-                $data->comment()->delete();
-            }
 
             return redirect()->back()->with('success', 'Category with its Subcategory and Posts have been deleted!');
         }
