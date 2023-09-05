@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use App\Models\Subcategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -62,14 +63,20 @@ class CategoryController extends Controller
 
     public function deleteCategory($category_id){
 
-        $category = Category::find($category_id);
+        $category = Category::findOrFail($category_id);
 
         if($category){
 
             $category->delete();
             $category->subcategory()->delete();
             $category->posts()->delete();
-            $category->posts()->comment()->delete();
+
+            $post = $category->posts;
+            foreach($post as $data){
+                $data = Post::findOrFail($data->id);
+                $data->comment()->delete();
+            }
+
             return redirect()->back()->with('success', 'Category with its Subcategory and Posts have been deleted!');
         }
         else {

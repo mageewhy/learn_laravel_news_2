@@ -37,7 +37,7 @@ class CommentController extends Controller
     }
 
     public function deleteComment($comment_id){
-        $comment = Comment::find($comment_id);
+        $comment = Comment::findOrFail($comment_id);
 
         $comment->delete();
 

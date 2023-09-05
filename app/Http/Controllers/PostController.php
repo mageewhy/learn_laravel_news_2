@@ -152,7 +152,7 @@ class PostController extends Controller
 
     public function deletePost($post_id){
 
-        $post = Post::find($post_id);
+        $post = Post::findOrFail($post_id);
         $image_name = $post->image;
         $image_path = public_path('images/'.$image_name);
         if(File::exists($image_path)) {

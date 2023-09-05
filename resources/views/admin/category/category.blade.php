@@ -60,6 +60,7 @@
                                         <th class="cell">Created At</th>
                                         <th class="cell">Updated At</th>
                                         <th class="cell">Action</th>
+                                        <th>adas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,6 +78,7 @@
                                                     href="{{ route('admin.delete-category', $item->id) }}"
                                                     id="delete">Delete</a>
                                             </td>
+                                            <td>{{$item->posts}}</td>
                                         </tr>
                                     @empty
                                         <tr>

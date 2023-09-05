@@ -74,7 +74,7 @@ class SubCategoryController extends Controller
 
     public function deleteSubcategory($sub_category_id){
 
-        $sub_category = Subcategory::find($sub_category_id);
+        $sub_category = Subcategory::findOrFail($sub_category_id);
 
         if($sub_category){
             $sub_category->posts()->delete();
@@ -92,7 +92,7 @@ class SubCategoryController extends Controller
         $search_text = $request->input('search-subcategory');
         $category_query = $request->input('select-category-query');
 
-        
+
         if($category_query == null && $search_text == null){
             $subcategory = Subcategory::paginate(7);
             $category_id = $category_query;
