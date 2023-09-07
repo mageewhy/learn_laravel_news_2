@@ -25,7 +25,7 @@
                 <div class="trending-main">
                     <div class="row">
                         <!-- Trending Bottom -->
-                        <div class="trending-bottom col-8">
+                        <div class="trending-bottom col-lg-8 col-md-10">
                             <div class="row p-2 shadow-sm mb-5 bg-white rounded">
                                 <div class="col-lg-12">
                                     <div class="section-tittle mb-30">

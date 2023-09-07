@@ -9,6 +9,17 @@
 @endphp
 
 <div class="col-lg-4">
+    <div class="mb-4 trand-right-single">
+        <form action="{{route('search-query-frontend')}}" method="GET">
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Search Keyword'" id="search" name="search-news">
+                </div>
+            </div>
+            <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+        </form>
+    </div>
     <div class="trand-right-single d-flex">
         <div class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
