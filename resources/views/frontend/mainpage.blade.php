@@ -5,7 +5,7 @@
             <div class="carousel-inner">
                 @foreach ($post_hero as $key => $data)
                     <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                        <img class="d-block w-100" style="height: 600px;" src="{{ asset('images/' . $data->image) }}"
+                        <img class="d-block w-100 img-fluid" src="{{ asset('images/' . $data->image) }}"
                             alt="{{ $data->image }}" />
                     </div>
                 @endforeach
